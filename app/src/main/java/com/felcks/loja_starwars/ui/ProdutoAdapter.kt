@@ -1,6 +1,7 @@
 package com.felcks.loja_starwars.ui
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -28,11 +29,18 @@ class ProdutoAdapter(val context: Context,
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val produto = produtos[position]
 
-        holder?.itemView?.tv_title.text = produto.nome
-        holder?.itemView?.tv_preco.text = produto.preco.toString()
-        holder?.itemView?.tv_vendedor.text = produto.vendedor
+        holder.itemView.tv_title.text = produto.nome
+        holder.itemView.tv_preco.text = produto.preco.toString()
+        holder.itemView.tv_vendedor.text = produto.vendedor
 
-        Picasso.with(context).load(produto.foto).into(holder?.itemView?.iv_foto)
+        Picasso.with(context).load(produto.foto).into(holder.itemView.iv_foto)
+
+        holder.itemView.iv_foto.setOnClickListener{
+
+            val intent = Intent(context, ImageZoomActivity::class.java)
+            intent.putExtra(ImageZoomActivity.NomesExtras_Imagem, produto.foto)
+            context.startActivity(intent)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, pos: Int): MyViewHolder {
